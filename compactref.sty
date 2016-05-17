@@ -15,7 +15,7 @@
     \newpage
     \global\@topnum\z@   % Prevents figures from going at top of page.%
     \begin{center}%
-      \textsf{\textbf{\LARGE\@title}}%
+      \textsf{\textbf{\Huge\@title}}%
     \end{center}\par
   \endgroup
 }
@@ -25,12 +25,12 @@
 \renewcommand\section{\@startsection{section}{1}{\z@}%
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
-                                   {\sffamily\Large\bfseries\centering}}
+                                   {\sffamily\huge\bfseries\centering}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\sffamily\large\bfseries}}
+                                     {\sffamily\LARGE\bfseries}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\sffamily\normalsize\bfseries}}
+                                     {\sffamily\Large\bfseries}}

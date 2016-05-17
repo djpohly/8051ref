@@ -1,52 +1,36 @@
 %
 % compactref.sty
 %
-\RequirePackage{multicol}
+\RequirePackage[margin=1cm]{geometry}
 \ProvidesPackage{compactref}[2000/09/04 Willem's Compact Reference Package]
 
-% Do I want options to this package?
-% Use the following:
-% \DeclareOption{optionname} {%
-%   \dosomething{arg}%
-% }
-
-%% MARGIN SETTINGS
-% Make the part of the paper that is used somewhat larger
-\addtolength{\hoffset}{-4cm}
-\addtolength{\textwidth}{7.5cm}
-\addtolength{\voffset}{-3.5cm}
-\addtolength{\textheight}{6.75cm}
-% No indenting of paragraphs
-\setlength{\parindent}{0pt}
 
 % No headers/footers/pagenumbers
 \pagestyle{empty}
 
+
 %% TITLE %%
-\renewcommand{\maketitle} {%
-  \begingroup%
+\renewcommand{\maketitle}{%
+  \begingroup
     \newpage
     \global\@topnum\z@   % Prevents figures from going at top of page.%
-    \begin{center}\underline{%
-%      \fontsize{18}{22}\fontfamily{cmr}\fontseries{b}\fontshape{n}\selectfont%
-      \normalfont\LARGE\bfseries%
-      \@title%
-    }\end{center} \par%
-  \endgroup%
+    \begin{center}%
+      \textsf{\textbf{\LARGE\@title}}%
+    \end{center}\par
+  \endgroup
 }
 
 
 %% SECTIONS %%
-\renewcommand\section{\@startsection {section}{1}{\z@}%
+\renewcommand\section{\@startsection{section}{1}{\z@}%
                                    {-3.5ex \@plus -1ex \@minus -.2ex}%
                                    {2.3ex \@plus.2ex}%
-                                   {\normalfont\Large\bfseries\centering}}
+                                   {\sffamily\Large\bfseries\centering}}
 \renewcommand\subsection{\@startsection{subsection}{2}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\normalfont\large\bfseries}}
+                                     {\sffamily\large\bfseries}}
 \renewcommand\subsubsection{\@startsection{subsubsection}{3}{\z@}%
                                      {-3.25ex\@plus -1ex \@minus -.2ex}%
                                      {1.5ex \@plus .2ex}%
-                                     {\normalfont\normalsize\bfseries}}
-\setcounter{secnumdepth}{0}			% ofzo
+                                     {\sffamily\normalsize\bfseries}}

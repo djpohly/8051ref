@@ -1,0 +1,168 @@
+\documentclass[10pt,notitlepage]{article}
+\usepackage{compactref}
+\usepackage{graphicx}
+
+\author{Willem van Engen}
+\title{8051 Compact Assembly Reference}
+
+\begin{document}
+\maketitle
+{\small
+
+\begin{multicols}{3}
+\begin{tabbing}
+
+\verb|const16|		\= = 16bit Code const \\
+\verb|const8|		\> =  8bit Code const \\
+\verb|direct|		\> =  8bit IData addr \\
+\verb|addr16|		\> = 16bit Code addr \\
+\verb|addr11|		\> = 11bit Code absaddr \\
+\verb|rel|			\> =  8bit Code reladdr signed \\
+\verb|bit|			\> =  8bit IData bit addr \\
+\verb|i|=0-1 \hspace{0.15cm} \verb|n|=0-7 \hspace{0.15cm} 
+\verb|a|=32*(absaddr shr 8)         
+\end{tabbing}
+
+{\ttfamily
+\begin{tabular}{l@{\hspace{5pt}}c@{\hspace{5pt}}c@{\hspace{5pt}}c@{\hspace{5pt}}
+							c@{\hspace{5pt}}c@{\hspace{5pt}}c@{\hspace{5pt}}c@{\hspace{5pt}}c}
+PSW &\underline{7} &\underline{6} &\underline{5} &
+     \underline{4} &\underline{3} &\underline{2} &\underline{1} &\underline{0} \\
+    &CY &AC &F0 &RS1 &RS0 &OV &F1 &P
+\end{tabular} }\\
+ \verb|RS0 RS1|: register bank selection; mem: \\
+\textit{00}:00-07 \hspace{0.15cm} \textit{01}:08-0f \hspace{0.15cm}
+\textit{10}:10-17 \hspace{0.15cm} \textit{11}:18-1f
+
+\end{multicols}
+
+\begin{multicols*}{2}
+
+\verb|Opcode  Mnemonic  Operands      Bytes     Flags   Cycles|
+\hrule
+\begin{verbatim}
+  11+a    ACALL   addr11          2                    2
+  24      ADD     A, #const8      2     CY AC OV P     1
+  26+i    ADD     A, @Ri          1     CY AC OV P     1
+  25      ADD     A, direct       2     CY AC OV P     1
+  28+n    ADD     A, Rn           1     CY AC OV P     1
+  34      ADDC    A, #const8      2     CY AC OV P     1
+  36+i    ADDC    A, @Ri          1     CY AC OV P     1
+  35      ADDC    A, direct       2     CY AC OV P     1
+  38+n    ADDC    A, Rn           1     CY AC OV P     1
+  01+a    AJMP    addr11          2                    2
+  54      ANL     A, #const8      2              P     1
+  56+i    ANL     A, @Ri          1              P     1
+  55      ANL     A, direct       2              P     1
+  58+n    ANL     A, Rn           1              P     1
+  B0      ANL     C, /bit         2     CY             2
+  82      ANL     C, bit          2     CY             2
+  53      ANL     direct, #const8 3                    2
+  52      ANL     direct, A       2                    1
+  B6+i    CJNE    @Ri, #const8, re3     CY             2
+  B4      CJNE    A, #const8, rel 3     CY             2
+  B5      CJNE    A, direct, rel  3     CY             2
+  B8+n    CJNE    Rn, #const8, rel3     CY             2
+  E4      CLR     A               1              P     1
+  C2      CLR     bit             2                    1
+  C3      CLR     C               1     CY             1
+  F4      CPL     A               1              P     1
+  B2      CPL     bit             2                    1
+  B3      CPL     C               1     CY             1
+  D4      DA      A               1     CY       P     1
+  16+i    DEC     @Ri             1                    1
+  14      DEC     A               1              P     1
+  15      DEC     direct          2                    1
+  18+n    DEC     Rn              1                    1
+  84      DIV     AB              1     CY    OV P     4
+  D5      DJNZ    direct, rel     3                    2
+  D8+n    DJNZ    Rn, rel         2                    2
+  06+i    INC     @Ri             1                    1
+  04      INC     A               1              P     1
+  05      INC     direct          2                    1
+  A3      INC     DPTR            1                    2
+  08+n    INC     Rn              1                    1
+  20      JB      bit, rel        3                    2
+  10      JBC     bit, rel        3                    2
+  40      JC      rel             2                    2
+  73      JMP     @A+DPTR         1                    2
+  30      JNB     bit, rel        3                    2
+  50      JNC     rel             2                    2
+  70      JNZ     rel             2                    2
+  60      JZ      rel             2                    2
+  12      LCALL   addr16          3                    2
+  02      LJMP    addr16          3                    2
+  76+i    MOV     @Ri, #const8    2                    1
+  F6+i    MOV     @Ri, A          1                    1
+  A6+i    MOV     @Ri, direct     2                    2
+  74      MOV     A, #const8      2              P     1
+  E6+i    MOV     A, @Ri          1              P     1
+  E5      MOV     A, direct       2              P     1
+  E8+n    MOV     A, Rn           1              P     1
+  92      MOV     bit, C          2                    2
+  A2      MOV     C, bit          2     CY             1
+  75      MOV     direct, #const8 3                    2
+  86+i    MOV     direct, @Ri     2                    2
+  F5      MOV     direct, A       2                    1
+  85      MOV     direct, direct  3                    2
+  88+n    MOV     direct, Rn      2                    2
+  90      MOV     DPTR, #const16  3                    2
+  78+n    MOV     Rn, #const8     2                    1
+  F8+n    MOV     Rn, A           1                    1
+  A8+n    MOV     Rn, direct      2                    2
+  93      MOVC    A, @A+DPTR      1              P     2
+  83      MOVC    A, @A+PC        1              P     2
+  F0      MOVX    @DPTR, A        1                    2
+  F2+i    MOVX    @Ri, A          1                    2
+  E0      MOVX    A, @DPTR        1              P     2
+  E2+i    MOVX    A, @Ri          1              P     2
+  A4      MUL     AB              1     CY    OV P     4
+  00      NOP                     1                    1
+  44      ORL     A, #const8      2              P     1
+  46+i    ORL     A, @Ri          1              P     1
+  45      ORL     A, direct       2              P     1
+  48+n    ORL     A, Rn           1              P     1
+  A0      ORL     C, /bit         2     CY             2
+  72      ORL     C, bit          2     CY             2
+  43      ORL     direct, #const8 3                    2
+  42      ORL     direct, A       2                    1
+  D0      POP     direct          2                    2
+  C0      PUSH    direct          2                    2
+  22      RET                     1                    2
+  32      RETI                    1                    2
+  23      RL      A               1                    1
+  33      RLC     A               1     CY       P     1
+  03      RR      A               1                    1
+  13      RRC     A               1     CY       P     1
+  D2      SETB    bit             2                    1
+  D3      SETB    C               1     CY             1
+  80      SJMP    rel             2                    2
+  94      SUBB    A, #const8      2     CY AC OV P     1
+  96+i    SUBB    A, @Ri          1     CY AC OV P     1
+  95      SUBB    A, direct       2     CY AC OV P     1
+  98+n    SUBB    A, Rn           1     CY AC OV P     1
+  C4      SWAP    A               1                    1
+  C6+i    XCH     A, @Ri          1              P     1
+  C5      XCH     A, direct       2              P     1
+  C8+n    XCH     A, Rn           1              P     1
+  D6+i    XCHD    A, @Ri          1              P     1
+  64      XRL     A, #const8      2              P     1
+  66+i    XRL     A, @Ri          1              P     1
+  65      XRL     A, direct       2              P     1
+  68+n    XRL     A, Rn           1              P     1
+  63      XRL     direct, #const8 3                    2
+  62      XRL     direct, A       2                    1
+\end{verbatim}
+
+\section{Memory organization}
+\includegraphics[width=10cm]{8051mem.png}
+
+\section{SFR's}
+
+
+
+
+\end{multicols*}
+
+} \end{document}
+

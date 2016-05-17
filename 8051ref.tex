@@ -1,4 +1,5 @@
 \documentclass[10pt,notitlepage]{article}
+
 \usepackage{compactref}
 \usepackage{graphicx}
 
@@ -6,8 +7,9 @@
 \title{8051 Compact Assembly Reference}
 
 \begin{document}
+
 \maketitle
-{\small
+\small
 
 \begin{multicols}{3}
 \begin{tabbing}
@@ -19,8 +21,8 @@
 \verb|addr11|		\> = 11bit Code absaddr \\
 \verb|rel|			\> =  8bit Code reladdr signed \\
 \verb|bit|			\> =  8bit IData bit addr \\
-\verb|i|=0-1 \hspace{0.15cm} \verb|n|=0-7 \hspace{0.15cm} 
-\verb|a|=32*(absaddr shr 8)         
+\verb|i|=0-1 \hspace{0.15cm} \verb|n|=0-7 \hspace{0.15cm}
+\verb|a|=32*(absaddr shr 8)
 \end{tabbing}
 
 {\ttfamily
@@ -164,5 +166,4 @@ PSW &\underline{7} &\underline{6} &\underline{5} &
 
 \end{multicols*}
 
-} \end{document}
-
+\end{document}

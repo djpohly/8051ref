@@ -44,11 +44,11 @@
 ]
 
 \texttt{%
-  \begin{tabular}{lllcc@{}c@{}c@{}cc}
+  \begin{tabular}{@{\,}lll>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c@{\,}}
     \toprule
     \normalfont Op & \normalfont ASM &
-      \normalfont Operand(s) & \normalfont Len &
-      \multicolumn{4}{c}{\normalfont Flags} & \normalfont Time \\
+      \normalfont Operand(s) & \normalfont Bytes &
+      \multicolumn{4}{c}{\normalfont Flags} & \normalfont Cycles \\
     \midrule
     11+a   & ACALL  & addr11             & 2  &   &  &  &    &  2 \\
     24     & ADD    & A, \#const8        & 2  &  C& A& O& P  &  1 \\
@@ -108,11 +108,11 @@
     E6+i   & MOV    & A, @Ri             & 1  &   &  &  & P  &  1 \\
   \end{tabular}
   \newpage
-  \begin{tabular}{lllcc@{}c@{}c@{}cc}
+  \begin{tabular}{@{\,}lll>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c@{\,}}
     \toprule
     \normalfont Op & \normalfont ASM &
-      \normalfont Operand(s) & \normalfont Len &
-      \multicolumn{4}{c}{\normalfont Flags} & \normalfont Time \\
+      \normalfont Operand(s) & \normalfont Bytes &
+      \multicolumn{4}{c}{\normalfont Flags} & \normalfont Cycles \\
     \midrule
     E5     & MOV    & A, direct          & 2  &   &  &  & P  &  1 \\
     E8+n   & MOV    & A, Rn              & 1  &   &  &  & P  &  1 \\

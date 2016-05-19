@@ -1,4 +1,4 @@
-\documentclass[9pt,notitlepage]{extarticle}
+\documentclass[9pt,landscape,notitlepage]{extarticle}
 
 \usepackage{compactref}
 \usepackage{multicol}
@@ -42,7 +42,6 @@
 \end{multicols}
 
 \ttfamily
-\raggedright
 \newsavebox\lefttable
 \newcommand\A{\texttt{A}}
 \newcommand\C{\texttt{C}}
@@ -54,7 +53,7 @@ byte}
 affects the \texttt{P} flag}
 \footnotetext[3]{\C variant may affect \C flag; \A variant may affect \texttt{P}
 flag}
-\sbox\lefttable{%
+\sbox\lefttable{\centering
   \begin{tabular}[t]{l>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
   \multicolumn{12}{c}{\small\sffamily\bfseries Arithmetic/byte manipulation}\\
   \toprule

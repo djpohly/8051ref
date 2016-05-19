@@ -1,60 +1,70 @@
 \documentclass[9pt,landscape,notitlepage]{extarticle}
 
+\title{8051 Quickref}
+\author{Willem van Engen, Devin J. Pohly}
+
 \usepackage{compactref}
 \usepackage{multicol}
 \usepackage{graphicx}
 \usepackage{booktabs}
 \usepackage{microtype}
 \usepackage{tabularx}
-\usepackage{multirow}
 
 \newcolumntype{C}{>{\centering\arraybackslash}X}
 
-\title{8051 Quickref}
-\author{Willem van Engen, Devin J. Pohly}
+\newcommand\A{\texttt{A}}
+\newcommand\AB{\texttt{AB}}
+\newcommand\C{\texttt{C}}
+\newcommand\DPTR{\texttt{DPTR}}
+\newcommand\PC{\texttt{PC}}
+\newcommand\AO[1]{#1\rlap{\normalfont\footnotemark[2]}}
+
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
 
 \begin{document}
 
 \maketitle
 
 \begin{multicols}{3}
-  \begin{tabbing}
-    \texttt{rel}\qquad		\= =  8bit Code reladdr signed \\
-    \texttt{addr16}		\> = 16bit Code addr \\
-    \texttt{addr11}		\> = 11bit Code absaddr \\
-    \texttt{i}: 0--1 \hspace{0.15cm} \texttt{n}: 0--7 \hspace{0.15cm}
-    \texttt{a}: 20*(absaddr shr 8) \\
-    \texttt{im}\quad\enspace		\= =  8bit immediate \\
-    \texttt{im16}		\> = 16bit immediate \\
-    \texttt{byte}		\> =  8bit IData addr \\
-    \texttt{bit}			\> =  8bit IData bit addr
-  \end{tabbing}
 
-  \texttt{PSW%
-    \addtolength{\columnwidth}{-36pt}%
-    \begin{tabularx}{\columnwidth}{@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}}
-       7 &6 &5 & 4 &3 &2 &1 &0 \\
-       C &A &F0 &RS1 &RS0 &V &F1 &P \\
-  \end{tabularx} }\\
-   \texttt{RS0 RS1}: register bank selection; byte: \\
-  \textbf{00}:00-07 \hspace{0.15cm} \textbf{01}:08-0f \hspace{0.15cm}
-  \textbf{10}:10-17 \hspace{0.15cm} \textbf{11}:18-1f
+\begin{tabbing}
+  \texttt{rel}\qquad		\= =  8bit Code reladdr signed \\
+  \texttt{addr16}		\> = 16bit Code addr \\
+  \texttt{addr11}		\> = 11bit Code absaddr \\
+  \texttt{i}: 0--1 \hspace{0.15cm} \texttt{n}: 0--7 \hspace{0.15cm}
+  \texttt{a}: 20*(absaddr shr 8) \\
+  \texttt{im}\quad\enspace		\= =  8bit immediate \\
+  \texttt{im16}		\> = 16bit immediate \\
+  \texttt{byte}		\> =  8bit IData addr \\
+  \texttt{bit}			\> =  8bit IData bit addr
+\end{tabbing}
+
+\texttt{PSW%
+  \addtolength{\columnwidth}{-36pt}%
+  \begin{tabularx}{\columnwidth}{@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}}
+     7 &6 &5 & 4 &3 &2 &1 &0 \\
+     C &A &F0 &RS1 &RS0 &V &F1 &P \\
+\end{tabularx} }\\
+ \texttt{RS0 RS1}: register bank selection; byte: \\
+\textbf{00}:00-07 \hspace{0.15cm} \textbf{01}:08-0f \hspace{0.15cm}
+\textbf{10}:10-17 \hspace{0.15cm} \textbf{11}:18-1f
+
 \end{multicols}
 
-\ttfamily
-\newsavebox\lefttable
-\newcommand\A{\texttt{A}}
-\newcommand\C{\texttt{C}}
-\newcommand\AO[1]{#1\rlap{\normalfont\footnotemark[2]}}
-\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+\begin{multicols}{2}
+
+% Prepopulate footnotes
 \footnotetext[1]{Immediate, direct, and bit addressing require one additional
 byte}
-\footnotetext[2]{Uses \texttt{A} rather than an immediate value; only this form
+\footnotetext[2]{Uses \A rather than an immediate value; only this form
 affects the \texttt{P} flag}
 \footnotetext[3]{\C variant may affect \C flag; \A variant may affect \texttt{P}
 flag}
-\sbox\lefttable{\centering
-  \begin{tabular}[t]{l>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
+
+\ttfamily
+\centering
+\begin{tabular}[t]{l>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
   \multicolumn{12}{c}{\small\sffamily\bfseries Arithmetic/byte manipulation}\\
   \toprule
   & Operands & \normalfont \#\rlap{\footnotemark[1]} & \normalfont M\rlap{\footnotemark[1]} & \normalfont @Ri & \normalfont Rn &
@@ -65,55 +75,40 @@ flag}
   ADD  & \A, op           & 24 & 25 & 26+i & 28+n & 1/2 &C&A&V&P& 1 \\
   ADDC & \A, op           & 34 & 35 & 36+i & 38+n & 1/2 &C&A&V&P& 1 \\
   SUBB & \A, op           & 94 & 95 & 96+i & 98+n & 1/2 &C&A&V&P& 1 \\
-  DIV  & \texttt{AB}      & 84 &    &      &      & 1 &C& &V&P& 4 \\
-  MUL  & \texttt{AB}      & A4 &    &      &      & 1 &C& &V&P& 4 \\
-  ORL  & byte, \A         & 42 &    &      &      & 2 & & & & & 1 \\
-       & byte, \#im     & 43 &    &      &      & 3 & & & & & 2 \\
+  DIV  & \AB              & 84 &    &      &      & 1   &C& &V&P& 4 \\
+  MUL  & \AB              & A4 &    &      &      & 1   &C& &V&P& 4 \\
+  ORL  & byte, \A         & 42 &    &      &      & 2   & & & & & 1 \\
+       & byte, \#im       & 43 &    &      &      & 3   & & & & & 2 \\
        & \A, op           & 44 & 45 & 46+i & 48+n & 1/2 & & & &P& 1 \\
-       & \C, op           &    & 72 &      &      & 2 &C& & & & 2 \\
-       & \C, /op          &    & A0 &      &      & 2 &C& & & & 2 \\
-  ANL  & byte, \A         & 52 &    &      &      & 2 & & & & & 1 \\
-       & byte, \#im     & 53 &    &      &      & 3 & & & & & 2 \\
+       & \C, op           &    & 72 &      &      & 2   &C& & & & 2 \\
+       & \C, /op          &    & A0 &      &      & 2   &C& & & & 2 \\
+  ANL  & byte, \A         & 52 &    &      &      & 2   & & & & & 1 \\
+       & byte, \#im       & 53 &    &      &      & 3   & & & & & 2 \\
        & \A, op           & 54 & 55 & 56+i & 58+n & 1/2 & & & &P& 1 \\
-       & \C, op           &    & 82 &      &      & 2 &C& & & & 2 \\
-       & \C, /op          &    & B0 &      &      & 2 &C& & & & 2 \\
-  XRL  & byte, \A         & 62 &    &      &      & 2 & & & & & 1 \\
-       & byte, \#im     & 63 &    &      &      & 3 & & & & & 2 \\
+       & \C, op           &    & 82 &      &      & 2   &C& & & & 2 \\
+       & \C, /op          &    & B0 &      &      & 2   &C& & & & 2 \\
+  XRL  & byte, \A         & 62 &    &      &      & 2   & & & & & 1 \\
+       & byte, \#im       & 63 &    &      &      & 3   & & & & & 2 \\
        & \A, op           & 64 & 65 & 66+i & 68+n & 1/2 & & & &P& 1 \\
-  MOV  & op, \#im   & \AO{74}&    & 76+i & 78+n & 2/3 & & & &\AO{P} & 1 \\
+  MOV  & op, \#im     & \AO{74}&    & 76+i & 78+n & 2/3 & & & &\AO{P} & 1 \\
        & byte, op         & 75 & 85 & 86+i & 88+n & 2/3 & & & & & 2 \\
        & op, byte         &    &    & A6+i & A8+n & 2/3 & & & & & 2 \\
        & \A, op           &    & E5 & E6+i & E8+n & 1/2 & & & &P& 1 \\
        & op, \A           &    & F5 & F6+i & F8+n & 1/2 & & & & & 1 \\
-       & bit, \C          &    & 92 &      &      & 2 & & & & & 2 \\
-       & \C, bit          &    & A2 &      &      & 2 &C& & & & 2 \\
-  SWAP & \A               & C4 &    &      &      & 1 & & & & & 1 \\
+       & bit, \C          &    & 92 &      &      & 2   & & & & & 2 \\
+       & \C, bit          &    & A2 &      &      & 2   &C& & & & 2 \\
+  SWAP & \A               & C4 &    &      &      & 1   & & & & & 1 \\
   XCH  & \A, op           &    & C5 & C6+i & C8+n & 1/2 & & & &P& 1 \\
-  XCHD & \A, op           &    &    & D6+i &      & 1 & & & &P& 1 \\
-  DA   & \A               & D4 &    &      &      & 1 &C& &V&P& 1 \\
+  XCHD & \A, op           &    &    & D6+i &      & 1   & & & &P& 1 \\
+  DA   & \A               & D4 &    &      &      & 1   &C& &V&P& 1 \\
   DJNZ & op, rel          &    & D5 &      & D8+n & 2/3 & & & & & 2 \\
-  CJNE & \A, op, rel      & B4 & B5 &      &      & 3 &C& & & & 2 \\
-       & op, \#im, rel  &    &    & B6+i & B8+n & 3 &C& & & & 2 \\
+  CJNE & \A, op, rel      & B4 & B5 &      &      & 3   &C& & & & 2 \\
+       & op, \#im, rel    &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
   \bottomrule
 \end{tabular}
-}
 
-\newlength\lefttableheight
-\settoheight\lefttableheight{\usebox\lefttable}
-\newlength\lefttabledepth
-\settodepth\lefttabledepth{\usebox\lefttable}
-\addtolength\lefttableheight\lefttabledepth
-\newlength\lefttablewidth
-\settowidth\lefttablewidth{\usebox\lefttable}
-\newlength\righttablewidth
-\setlength\righttablewidth\textwidth
-\addtolength\righttablewidth{-\lefttablewidth}
-
-\begin{minipage}[t]{\lefttablewidth}\usebox\lefttable\end{minipage}%
-  \begin{minipage}[t][\lefttableheight][t]{\righttablewidth}
-  \centering
-    \begin{tabular}[t]{lcc>{\normalfont}l>{\normalfont}c>{\normalfont}c}
-      \multicolumn{6}{c}{\small\sffamily\bfseries Control} \\
+\begin{tabular}[t]{lcc>{\normalfont}l>{\normalfont}c>{\normalfont}c}
+  \multicolumn{6}{c}{\small\sffamily\bfseries Control} \\
   \toprule
   & \normalfont Op & \normalfont Op2 & \normalfont Operands &
     \normalfont Len & \normalfont Cyc \\
@@ -130,7 +125,7 @@ flag}
   \normalfont \texttt{PUSH}/\texttt{POP}
        & C0 & D0 & byte     & 2 & 2 \\
   \normalfont \texttt{AJMP}/\texttt{ACALL}
-       & 01+a & 11+a & addr11 & 2 & 2 \\
+       &01+a&11+a& addr11   & 2 & 2 \\
   \normalfont \texttt{LJMP}/\texttt{LCALL}
        & 02 & 12 & addr16   & 3 & 2 \\
   \normalfont \texttt{RET}/\texttt{RETI}
@@ -139,16 +134,15 @@ flag}
 \end{tabular}
 
 \vfill
-% bit requires one extra byte, C may affect C, A may affect P
 \begin{tabular}{lccc>{\normalfont}cc>{\normalfont}c}
   \multicolumn{7}{c}{\small\sffamily\bfseries Bit manipulation} \\
   \toprule
   & \normalfont bit\rlap{\footnotemark[1]} & \C & \A & Len & Fl & Cyc \\
   \midrule
-  RR   &    &    & 03 & 1 &       & 1 \\
-  RRC  &    &    & 13 & 1 &C\,\,P & 1 \\
-  RL   &    &    & 23 & 1 &       & 1 \\
-  RLC  &    &    & 33 & 1 &C\,\,P & 1 \\
+  RR   &    &    & 03 & 1   &       & 1 \\
+  RRC  &    &    & 13 & 1   &C\,\,P & 1 \\
+  RL   &    &    & 23 & 1   &       & 1 \\
+  RLC  &    &    & 33 & 1   &C\,\,P & 1 \\
   CPL  & B2 & B3 & F4 & 1/2 & (C\,\,P)\rlap{\footnotemark[3]} & 1 \\
   CLR  & C2 & C3 & E4 & 1/2 & (C\,\,P)\rlap{\footnotemark[3]} & 1 \\
   SETB & D2 & D3 &    & 1/2 & (C\,\,P)\rlap{\footnotemark[3]} & 1 \\
@@ -162,18 +156,17 @@ flag}
   & \normalfont Operands & \normalfont Op & \normalfont Len &
     \normalfont Fl & \normalfont Cyc \\
   \midrule
-  MOVX & \A, @\texttt{DPTR}     & E0   & 1 & P & 2 \\
-       & \A, @Ri                & E2+i & 1 & P & 2 \\
-       & @\texttt{DPTR}, \A     & F0   & 1 &   & 2 \\
-       & @Ri, \A                & F2+i & 1 &   & 2 \\
-  JMP  & @\A+\texttt{DPTR}      & 73   & 1 &   & 2 \\
-  MOVC & \A, @\A+\texttt{PC}    & 83   & 1 & P & 2 \\
-       & \A, @\A+\texttt{DPTR}  & 93   & 1 & P & 2 \\
-  MOV  & \texttt{DPTR}, \#im16  & 90   & 3 &   & 2 \\
-  INC  & \texttt{DPTR}          & A3   & 1 &   & 2 \\
+  MOVX & \A, @\DPTR    & E0   & 1 & P & 2 \\
+       & \A, @Ri       & E2+i & 1 & P & 2 \\
+       & @\DPTR, \A    & F0   & 1 &   & 2 \\
+       & @Ri, \A       & F2+i & 1 &   & 2 \\
+  JMP  & @\A+\DPTR     & 73   & 1 &   & 2 \\
+  MOVC & \A, @\A+\PC   & 83   & 1 & P & 2 \\
+       & \A, @\A+\DPTR & 93   & 1 & P & 2 \\
+  MOV  & \DPTR, \#im16 & 90   & 3 &   & 2 \\
+  INC  & \DPTR         & A3   & 1 &   & 2 \\
   \bottomrule
 \end{tabular}
-\end{minipage}
 
 \newpage
 
@@ -182,5 +175,6 @@ flag}
 
 \section*{SFRs}
 
+\end{multicols}
 
 \end{document}

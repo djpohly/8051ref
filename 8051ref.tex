@@ -44,11 +44,10 @@
   \addtolength{\columnwidth}{-36pt}%
   \begin{tabularx}{\columnwidth}{@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}}
      7 &6 &5 & 4 &3 &2 &1 &0 \\
-     C &A &F0 &RS1 &RS0 &V &F1 &P \\
+     C &A &F0 &RS1 &RS0 &V &UD &P \\
 \end{tabularx} }\\
- \texttt{RS0 RS1}: register bank selection; byte: \\
-\textbf{00}:00-07 \hspace{0.15cm} \textbf{01}:08-0f \hspace{0.15cm}
-\textbf{10}:10-17 \hspace{0.15cm} \textbf{11}:18-1f
+Fl: \textbf{c}arry \textbf{a}uxcarry o\textbf{v}erflow \textbf{p}arity \\
+register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 
 \end{multicols}
 
@@ -134,7 +133,7 @@
 \begin{tabular}{lccc>{\normalfont}cc>{\normalfont}c}
   \multicolumn{7}{c}{\small\sffamily\bfseries Bit manipulation} \\
   \toprule
-  & \normalfont bit\rlap{\footnotemark[1]} & \C & \A & Len & Fl & Cyc \\
+  & \normalfont bit\rlap{\footnotemark[1]} & \C & \A & Len & \normalfont Fl & Cyc \\
   \midrule
   RR   &    &    & 03 & 1   &       & 1 \\
   RRC  &    &    & 13 & 1   &C\,\,P & 1 \\

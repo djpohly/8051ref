@@ -162,8 +162,8 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   MOV  & \DPTR, \#$K$   & 90   & 3 &   & 2 \\
   INC  & \DPTR          & A3   & 1 &   & 2 \\
   MOVX & \A, @\DPTR     & E0   & 1 & P & 2 \\
-       & \A, @R$i$      & E2+i & 1 & P & 2 \\
        & @\DPTR, \A     & F0   & 1 &   & 2 \\
+       & \A, @R$i$      & E2+i & 1 & P & 2 \\
        & @R$i$, \A      & F2+i & 1 &   & 2 \\
   JMP  & @\A+\DPTR      & 73   & 1 &   & 2 \\
   MOVC & \A, @\A+\PC    & 83   & 1 & P & 2 \\

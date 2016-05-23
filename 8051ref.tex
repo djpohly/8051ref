@@ -36,8 +36,8 @@
   \texttt{a}: 20*(absaddr shr 8) \\
   \texttt{im}\quad\enspace		\= =  8bit immediate \\
   \texttt{im16}		\> = 16bit immediate \\
-  \texttt{byte}		\> =  8bit IData addr \\
-  \texttt{bit}			\> =  8bit IData bit addr
+  \texttt{byte}		\> =  8bit direct \\
+  \texttt{bit}			\> =  8bit direct bit
 \end{tabbing}
 
 \texttt{PSW%
@@ -55,12 +55,9 @@
 \begin{multicols}{2}
 
 % Prepopulate footnotes
-\footnotetext[1]{Immediate, direct, and bit addressing require one additional
-byte}
-\footnotetext[2]{Uses \A rather than an immediate value; only this form
-affects the \texttt{P} flag}
-\footnotetext[3]{\C variant may affect \C flag; \A variant may affect \texttt{P}
-flag}
+\footnotetext[1]{Immediate, direct, and bit operands require one additional byte}
+\footnotetext[2]{Uses {\A} rather than an immediate value; only this form affects the \texttt{P} flag}
+\footnotetext[3]{{\C} variant may affect {\C} flag; {\A} variant may affect \texttt{P} flag}
 
 \ttfamily
 \centering

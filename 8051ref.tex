@@ -107,29 +107,29 @@ flag}
   \bottomrule
 \end{tabular}
 
-\begin{tabular}[t]{lcc>{\normalfont}l>{\normalfont}c>{\normalfont}c}
+\begin{tabular}[t]{l>{\normalfont}lcc>{\normalfont}c>{\normalfont}c}
   \multicolumn{6}{c}{\small\sffamily\bfseries Control} \\
   \toprule
-  & \normalfont Op & \normalfont Op2 & \normalfont Operands &
+  & \normalfont Operands & \multicolumn{2}{c}{\normalfont Opcodes} &
     \normalfont Len & \normalfont Cyc \\
   \midrule
-  NOP  & 00 &    &          & 1 & 1 \\
-  JBC  & 10 &    & bit, rel & 3 & 2 \\
+  NOP  &          & 00 &    & 1 & 1 \\
+  JBC  & bit, rel & 10 &    & 3 & 2 \\
   \normalfont \texttt{JB}/\texttt{JNB}
-       & 20 & 30 & bit, rel & 3 & 2 \\
+       & bit, rel & 20 & 30 & 3 & 2 \\
   \normalfont \texttt{JC}/\texttt{JNC}
-       & 40 & 50 & rel      & 2 & 2 \\
+       & rel      & 40 & 50 & 2 & 2 \\
   \normalfont \texttt{JZ}/\texttt{JNZ}
-       & 60 & 70 & rel      & 2 & 2 \\
-  SJMP & 80 &    & rel      & 2 & 2 \\
+       & rel      & 60 & 70 & 2 & 2 \\
+  SJMP & rel      & 80 &    & 2 & 2 \\
   \normalfont \texttt{PUSH}/\texttt{POP}
-       & C0 & D0 & byte     & 2 & 2 \\
+       & byte     & C0 & D0 & 2 & 2 \\
   \normalfont \texttt{AJMP}/\texttt{ACALL}
-       &01+a&11+a& addr11   & 2 & 2 \\
+       & addr11   &01+a&11+a& 2 & 2 \\
   \normalfont \texttt{LJMP}/\texttt{LCALL}
-       & 02 & 12 & addr16   & 3 & 2 \\
+       & addr16   & 02 & 12 & 3 & 2 \\
   \normalfont \texttt{RET}/\texttt{RETI}
-       & 22 & 32 &          & 1 & 2 \\
+       &          & 22 & 32 & 1 & 2 \\
   \bottomrule
 \end{tabular}
 

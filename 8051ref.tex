@@ -30,15 +30,15 @@
 \begin{multicols}{3}
 
 \begin{tabbing}
-  \texttt{rel}\qquad		\= =  8bit Code reladdr signed \\
-  \texttt{addr16}		\> = 16bit Code addr \\
-  \texttt{addr11}		\> = 11bit Code absaddr \\
-  \texttt{i}: 0--1 \hspace{0.15cm} \texttt{n}: 0--7 \hspace{0.15cm}
-  \texttt{a}: 20*(absaddr shr 8) \\
-  \texttt{imm}\quad\enspace		\= =  8bit immediate \\
-  \texttt{imm16}		\> = 16bit immediate \\
-  \texttt{byte}		\> =  8bit direct \\
-  \texttt{bit}			\> =  8bit direct bit
+  $d$		\= =  8bit direct \\
+  $b$			\> =  8bit direct bit \\
+  $k$		\> =  8bit immediate \\
+  $K$		\> = 16bit immediate \\
+  $ra$\qquad		\= =  8bit signed relative address \\
+  $aa$		\> = 11bit absolute address \\
+  $la$		\> = 16bit long address \\
+  $i$: 0--1 \hspace{0.15cm} $n$: 0--7 \hspace{0.15cm}
+  $a$: 20*(absaddr shr 8)
 \end{tabbing}
 
 \noindent
@@ -100,9 +100,9 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   XCH  & \A, & $-$           &&    & C5 & C6+i & C8+n & 1/2 & & & &P& 1 \\
   XCHD & \A, & $-$           &&    &    & D6+i &      & 1   & & & &P& 1 \\
   DA   & \A                 &&& D4 &    &      &      & 1   &C& &V&P& 1 \\
-  DJNZ & $-$, & $o$          &&    & D5 &      & D8+n & 2/3 & & & & & 2 \\
-  CJNE & \A, & $-$, & $o$     & B4 & B5 &      &      & 3   &C& & & & 2 \\
-       & $-$, & \I$k$, & $o$  &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
+  DJNZ & $-$, & $ra$         &&    & D5 &      & D8+n & 2/3 & & & & & 2 \\
+  CJNE & \A, & $-$, & $ra$    & B4 & B5 &      &      & 3   &C& & & & 2 \\
+       & $-$, & \I$k$, & $ra$ &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
   \bottomrule
 \end{tabular}
 
@@ -114,23 +114,23 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   \multicolumn{3}{l}{\textnormal{\textbf{Control}}} & \multicolumn{2}{c}{\normalfont Opcodes} &
     \normalfont Len & \normalfont Cyc \\
   \midrule
-  NOP  &         && 00 &    & 1 & 1 \\
-  JBC  & b, & ra  & 10 &    & 3 & 2 \\
+  NOP  &            && 00 &    & 1 & 1 \\
+  JBC  & $b$, & $ra$ & 10 &    & 3 & 2 \\
   \normalfont \texttt{JB}/\texttt{JNB}
-       & b, & ra  & 20 & 30 & 3 & 2 \\
+       & $b$, & $ra$ & 20 & 30 & 3 & 2 \\
   \normalfont \texttt{JC}/\texttt{JNC}
-       & ra      && 40 & 50 & 2 & 2 \\
+       & $ra$       && 40 & 50 & 2 & 2 \\
   \normalfont \texttt{JZ}/\texttt{JNZ}
-       & ra      && 60 & 70 & 2 & 2 \\
-  SJMP & ra      && 80 &    & 2 & 2 \\
+       & $ra$       && 60 & 70 & 2 & 2 \\
+  SJMP & $ra$       && 80 &    & 2 & 2 \\
   \normalfont \texttt{PUSH}/\texttt{POP}
-       & d       && C0 & D0 & 2 & 2 \\
+       & $d$        && C0 & D0 & 2 & 2 \\
   \normalfont \texttt{AJMP}/\texttt{ACALL}
-       & sa      &&01+a&11+a& 2 & 2 \\
+       & $aa$       &&01+a&11+a& 2 & 2 \\
   \normalfont \texttt{LJMP}/\texttt{LCALL}
-       & la      && 02 & 12 & 3 & 2 \\
+       & $la$       && 02 & 12 & 3 & 2 \\
   \normalfont \texttt{RET}/\texttt{RETI}
-       &         && 22 & 32 & 1 & 2 \\
+       &            && 22 & 32 & 1 & 2 \\
   \bottomrule
 \end{tabular}
 
@@ -139,7 +139,7 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 \begin{tabular}{lccc>{\normalfont}cc>{\normalfont}c}
   \multicolumn{7}{c}{\small\sffamily\bfseries Bit manipulation} \\
   \toprule
-  & \normalfont bit\fn1 & \C & \A & Len & \normalfont Fl & Cyc \\
+  & \normalfont $b$\fn1 & \C & \A & Len & \normalfont Fl & Cyc \\
   \midrule
   RR   &    &    & 03 & 1   &       & 1 \\
   RRC  &    &    & 13 & 1   &C\,\,P & 1 \\
@@ -160,13 +160,13 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
     \normalfont Fl & \normalfont Cyc \\
   \midrule
   MOVX & \A, @\DPTR     & E0   & 1 & P & 2 \\
-       & \A, @Ri        & E2+i & 1 & P & 2 \\
+       & \A, @R$i$      & E2+i & 1 & P & 2 \\
        & @\DPTR, \A     & F0   & 1 &   & 2 \\
-       & @Ri, \A        & F2+i & 1 &   & 2 \\
+       & @R$i$, \A      & F2+i & 1 &   & 2 \\
   JMP  & @\A+\DPTR      & 73   & 1 &   & 2 \\
   MOVC & \A, @\A+\PC    & 83   & 1 & P & 2 \\
        & \A, @\A+\DPTR  & 93   & 1 & P & 2 \\
-  MOV  & \DPTR, \#imm16 & 90   & 3 &   & 2 \\
+  MOV  & \DPTR, \#$K$   & 90   & 3 &   & 2 \\
   INC  & \DPTR          & A3   & 1 &   & 2 \\
   \bottomrule
 \end{tabular}

@@ -15,6 +15,7 @@
 \newcommand\A{\texttt{A}}
 \newcommand\AB{\texttt{AB}}
 \newcommand\C{\texttt{C}}
+\newcommand\I{\texttt{\#}}
 \newcommand\DPTR{\texttt{DPTR}}
 \newcommand\PC{\texttt{PC}}
 \newcommand\fn[1]{\rlap{\footnotemark[#1]}}
@@ -61,74 +62,75 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 
 \ttfamily
 \centering
-\begin{tabular}[t]{l>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
-  \multicolumn{12}{c}{\small\sffamily\bfseries Arithmetic/byte manipulation}\\
+  \begin{tabular}[t]{l>{\normalfont}l@{ }>{\normalfont}l@{ }>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
+  %\multicolumn{12}{c}{\small\sffamily\bfseries Arithmetic/byte manipulation}\\
   \toprule
-  & Operands & \normalfont \#\fn1 & \normalfont M\fn1 & \normalfont @Ri & \normalfont Rn &
-    Len & \multicolumn{4}{c}{\normalfont Fl} & Cyc \\
+    \multicolumn{4}{l}{\textnormal{\textbf{Arithmetic}}} &
+    \textnormal{\#}\fn1 & $d$\fn1 & \textnormal{@R$i$} & \textnormal{R$n$} &
+    Len & \multicolumn{4}{c}{\textnormal{Fl}} & Cyc \\
   \midrule
-  INC  & op             &04\fn2& 05 & 06+i & 08+n & 1/2 & & & &P\fn2& 1 \\
-  DEC  & op             &14\fn2& 15 & 16+i & 18+n & 1/2 & & & &P\fn2& 1 \\
-  ADD  & \A, op           & 24 & 25 & 26+i & 28+n & 1/2 &C&A&V&P& 1 \\
-  ADDC & \A, op           & 34 & 35 & 36+i & 38+n & 1/2 &C&A&V&P& 1 \\
-  SUBB & \A, op           & 94 & 95 & 96+i & 98+n & 1/2 &C&A&V&P& 1 \\
-  DIV  & \AB              & 84 &    &      &      & 1   &C& &V&P& 4 \\
-  MUL  & \AB              & A4 &    &      &      & 1   &C& &V&P& 4 \\
-  ORL  & byte, \A         & 42 &    &      &      & 2   & & & & & 1 \\
-       & byte, \#imm      & 43 &    &      &      & 3   & & & & & 2 \\
-       & \A, op           & 44 & 45 & 46+i & 48+n & 1/2 & & & &P& 1 \\
-       & \C, op           &    & 72 &      &      & 2   &C& & & & 2 \\
-       & \C, /op          &    & A0 &      &      & 2   &C& & & & 2 \\
-  ANL  & byte, \A         & 52 &    &      &      & 2   & & & & & 1 \\
-       & byte, \#imm      & 53 &    &      &      & 3   & & & & & 2 \\
-       & \A, op           & 54 & 55 & 56+i & 58+n & 1/2 & & & &P& 1 \\
-       & \C, op           &    & 82 &      &      & 2   &C& & & & 2 \\
-       & \C, /op          &    & B0 &      &      & 2   &C& & & & 2 \\
-  XRL  & byte, \A         & 62 &    &      &      & 2   & & & & & 1 \\
-       & byte, \#imm      & 63 &    &      &      & 3   & & & & & 2 \\
-       & \A, op           & 64 & 65 & 66+i & 68+n & 1/2 & & & &P& 1 \\
-  MOV  & op, \#imm      &74\fn2&    & 76+i & 78+n & 2/3 & & & &P\fn2& 1 \\
-       & byte, op         & 75 & 85 & 86+i & 88+n & 2/3 & & & & & 2 \\
-       & op, byte         &    &    & A6+i & A8+n & 2/3 & & & & & 2 \\
-       & \A, op           &    & E5 & E6+i & E8+n & 1/2 & & & &P& 1 \\
-       & op, \A           &    & F5 & F6+i & F8+n & 1/2 & & & & & 1 \\
-       & bit, \C          &    & 92 &      &      & 2   & & & & & 2 \\
-       & \C, bit          &    & A2 &      &      & 2   &C& & & & 2 \\
-  SWAP & \A               & C4 &    &      &      & 1   & & & & & 1 \\
-  XCH  & \A, op           &    & C5 & C6+i & C8+n & 1/2 & & & &P& 1 \\
-  XCHD & \A, op           &    &    & D6+i &      & 1   & & & &P& 1 \\
-  DA   & \A               & D4 &    &      &      & 1   &C& &V&P& 1 \\
-  DJNZ & op, rel          &    & D5 &      & D8+n & 2/3 & & & & & 2 \\
-  CJNE & \A, op, rel      & B4 & B5 &      &      & 3   &C& & & & 2 \\
-       & op, \#imm, rel   &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
+  INC  & $-$              &&&04\fn2& 05 & 06+i & 08+n & 1/2 & & & &P\fn2& 1 \\
+  DEC  & $-$              &&&14\fn2& 15 & 16+i & 18+n & 1/2 & & & &P\fn2& 1 \\
+  ADD  & \A, & $-$           && 24 & 25 & 26+i & 28+n & 1/2 &C&A&V&P& 1 \\
+  ADDC & \A, & $-$           && 34 & 35 & 36+i & 38+n & 1/2 &C&A&V&P& 1 \\
+  SUBB & \A, & $-$           && 94 & 95 & 96+i & 98+n & 1/2 &C&A&V&P& 1 \\
+  DIV  & \AB                &&& 84 &    &      &      & 1   &C& &V&P& 4 \\
+  MUL  & \AB                &&& A4 &    &      &      & 1   &C& &V&P& 4 \\
+  ORL  & $d$, & \A           && 42 &    &      &      & 2   & & & & & 1 \\
+       & $d$, & \I$k$        && 43 &    &      &      & 3   & & & & & 2 \\
+       & \A, & $-$           && 44 & 45 & 46+i & 48+n & 1/2 & & & &P& 1 \\
+       & \C, & $b$           &&    & 72 &      &      & 2   &C& & & & 2 \\
+       & \C, & \texttt{/}$b$ &&    & A0 &      &      & 2   &C& & & & 2 \\
+  ANL  & $d$, & \A           && 52 &    &      &      & 2   & & & & & 1 \\
+       & $d$, & \I$k$        && 53 &    &      &      & 3   & & & & & 2 \\
+       & \A, & $-$           && 54 & 55 & 56+i & 58+n & 1/2 & & & &P& 1 \\
+       & \C, & $b$           &&    & 82 &      &      & 2   &C& & & & 2 \\
+       & \C, & \texttt{/}$b$ &&    & B0 &      &      & 2   &C& & & & 2 \\
+  XRL  & $d$, & \A           && 62 &    &      &      & 2   & & & & & 1 \\
+       & $d$, & \I$k$        && 63 &    &      &      & 3   & & & & & 2 \\
+       & \A, & $-$           && 64 & 65 & 66+i & 68+n & 1/2 & & & &P& 1 \\
+  MOV  & $-$, & \I$k$      &&74\fn2&    & 76+i & 78+n & 2/3 & & & &P\fn2& 1 \\
+       & $d$, & $-$          && 75 & 85 & 86+i & 88+n & 2/3 & & & & & 2 \\
+       & $-$, & $d$          &&    &    & A6+i & A8+n & 2/3 & & & & & 2 \\
+       & \A, & $-$           &&    & E5 & E6+i & E8+n & 1/2 & & & &P& 1 \\
+       & $-$, & \A           &&    & F5 & F6+i & F8+n & 1/2 & & & & & 1 \\
+       & $b$, & \C           &&    & 92 &      &      & 2   & & & & & 2 \\
+       & \C, & $b$           &&    & A2 &      &      & 2   &C& & & & 2 \\
+  SWAP & \A                 &&& C4 &    &      &      & 1   & & & & & 1 \\
+  XCH  & \A, & $-$           &&    & C5 & C6+i & C8+n & 1/2 & & & &P& 1 \\
+  XCHD & \A, & $-$           &&    &    & D6+i &      & 1   & & & &P& 1 \\
+  DA   & \A                 &&& D4 &    &      &      & 1   &C& &V&P& 1 \\
+  DJNZ & $-$, & $o$          &&    & D5 &      & D8+n & 2/3 & & & & & 2 \\
+  CJNE & \A, & $-$, & $o$     & B4 & B5 &      &      & 3   &C& & & & 2 \\
+       & $-$, & \I$k$, & $o$  &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
   \bottomrule
 \end{tabular}
 
 \vfill
 
-\begin{tabular}[t]{l>{\normalfont}lcc>{\normalfont}c>{\normalfont}c}
-  \multicolumn{6}{c}{\small\sffamily\bfseries Control} \\
+\begin{tabular}[t]{ll@{}lcc>{\normalfont}c>{\normalfont}c}
+  %\multicolumn{6}{c}{\small\sffamily\bfseries Control} \\
   \toprule
-  & \normalfont Operands & \multicolumn{2}{c}{\normalfont Opcodes} &
+  \multicolumn{3}{l}{\textnormal{\textbf{Control}}} & \multicolumn{2}{c}{\normalfont Opcodes} &
     \normalfont Len & \normalfont Cyc \\
   \midrule
-  NOP  &          & 00 &    & 1 & 1 \\
-  JBC  & bit, rel & 10 &    & 3 & 2 \\
+  NOP  &         && 00 &    & 1 & 1 \\
+  JBC  & b, & ra  & 10 &    & 3 & 2 \\
   \normalfont \texttt{JB}/\texttt{JNB}
-       & bit, rel & 20 & 30 & 3 & 2 \\
+       & b, & ra  & 20 & 30 & 3 & 2 \\
   \normalfont \texttt{JC}/\texttt{JNC}
-       & rel      & 40 & 50 & 2 & 2 \\
+       & ra      && 40 & 50 & 2 & 2 \\
   \normalfont \texttt{JZ}/\texttt{JNZ}
-       & rel      & 60 & 70 & 2 & 2 \\
-  SJMP & rel      & 80 &    & 2 & 2 \\
+       & ra      && 60 & 70 & 2 & 2 \\
+  SJMP & ra      && 80 &    & 2 & 2 \\
   \normalfont \texttt{PUSH}/\texttt{POP}
-       & byte     & C0 & D0 & 2 & 2 \\
+       & d       && C0 & D0 & 2 & 2 \\
   \normalfont \texttt{AJMP}/\texttt{ACALL}
-       & addr11   &01+a&11+a& 2 & 2 \\
+       & sa      &&01+a&11+a& 2 & 2 \\
   \normalfont \texttt{LJMP}/\texttt{LCALL}
-       & addr16   & 02 & 12 & 3 & 2 \\
+       & la      && 02 & 12 & 3 & 2 \\
   \normalfont \texttt{RET}/\texttt{RETI}
-       &          & 22 & 32 & 1 & 2 \\
+       &         && 22 & 32 & 1 & 2 \\
   \bottomrule
 \end{tabular}
 

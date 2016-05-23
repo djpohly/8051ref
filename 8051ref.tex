@@ -111,6 +111,8 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   \bottomrule
 \end{tabular}
 
+\vfill
+
 \begin{tabular}[t]{l>{\normalfont}lcc>{\normalfont}c>{\normalfont}c}
   \multicolumn{6}{c}{\small\sffamily\bfseries Control} \\
   \toprule
@@ -138,6 +140,7 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 \end{tabular}
 
 \vfill
+
 \begin{tabular}{lccc>{\normalfont}cc>{\normalfont}c}
   \multicolumn{7}{c}{\small\sffamily\bfseries Bit manipulation} \\
   \toprule
@@ -154,6 +157,7 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 \end{tabular}
 
 \vfill
+
 \begin{tabular}{llc>{\normalfont}cc>{\normalfont}c}
   \multicolumn{6}{c}{\small\sffamily\bfseries Code/XData segments} \\
   \toprule
@@ -171,8 +175,11 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   INC  & \DPTR          & A3   & 1 &   & 2 \\
   \bottomrule
 \end{tabular}
+\end{multicols}
 
 \newpage
+
+\begin{multicols}{2}
 
 \section*{Memory organization}
 \includegraphics[width=10cm]{8051mem.png}

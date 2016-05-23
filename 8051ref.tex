@@ -1,4 +1,4 @@
-\documentclass[9pt,landscape,notitlepage]{extarticle}
+\documentclass[9pt,notitlepage]{extarticle}
 
 \title{8051 Quickref}
 \author{Willem van Engen, Devin J. Pohly}
@@ -28,31 +28,31 @@
 
 \maketitle
 
-\begin{multicols}{3}
-
-\begin{tabbing}
-  $d$		\= =  8bit direct \\
-  $b$			\> =  8bit direct bit \\
-  $k$		\> =  8bit immediate \\
-  $K$		\> = 16bit immediate \\
-  $ra$\qquad		\= =  8bit signed relative address \\
-  $aa$		\> = 11bit absolute address \\
-  $la$		\> = 16bit long address \\
-  $i$: 0--1 \hspace{0.15cm} $n$: 0--7 \hspace{0.15cm}
-  $a$: 20*(absaddr shr 8)
-\end{tabbing}
-
-\noindent
-\texttt{PSW}:
-\begin{tabularx}{2.2in}{CCCCCCCC}
-  7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
-  \texttt{C} & \texttt{A} & \texttt{F0} & \texttt{RS1} &
-   \texttt{RS0} & \texttt{V} & \texttt{UD} & \texttt{P}
-\end{tabularx}\\
-F: \textbf{c}arry \textbf{a}uxcarry o\textbf{v}erflow \textbf{p}arity \\
-register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
-
-\end{multicols}
+\begin{tabular}{rl}
+  $d$  & 8-bit direct byte \\
+  $b$  & 8-bit direct bit \\
+  $k$  & 8-bit immediate \\
+  $K$  & 16-bit immediate \\
+\end{tabular}
+\hfill
+\begin{tabular}{rl}
+  $ra$ & 8-bit signed relative address \\
+  $aa$ & 11-bit absolute address \\
+  $la$ & 16-bit long address \\
+  \multicolumn{2}{l}{$i$: 0--1 \hspace{0.15cm} $n$: 0--7 \hspace{0.15cm}
+    $a$: 20*(absaddr shr 8)}
+\end{tabular}
+\hfill
+\parbox{2.75in}{
+  \texttt{PSW}:
+  \begin{tabularx}{2.2in}{CCCCCCCC}
+    7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+    \texttt{C} & \texttt{A} & \texttt{F0} & \texttt{RS1} &
+     \texttt{RS0} & \texttt{V} & \texttt{UD} & \texttt{P}
+  \end{tabularx}\\
+  F: \textbf{c}arry \textbf{a}uxcarry o\textbf{v}erflow \textbf{p}arity \\
+  register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
+}
 
 \begin{multicols}{2}
 

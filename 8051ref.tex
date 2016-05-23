@@ -34,8 +34,8 @@
   \texttt{addr11}		\> = 11bit Code absaddr \\
   \texttt{i}: 0--1 \hspace{0.15cm} \texttt{n}: 0--7 \hspace{0.15cm}
   \texttt{a}: 20*(absaddr shr 8) \\
-  \texttt{im}\quad\enspace		\= =  8bit immediate \\
-  \texttt{im16}		\> = 16bit immediate \\
+  \texttt{imm}\quad\enspace		\= =  8bit immediate \\
+  \texttt{imm16}		\> = 16bit immediate \\
   \texttt{byte}		\> =  8bit direct \\
   \texttt{bit}			\> =  8bit direct bit
 \end{tabbing}
@@ -82,19 +82,19 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   DIV  & \AB              & 84 &    &      &      & 1   &C& &V&P& 4 \\
   MUL  & \AB              & A4 &    &      &      & 1   &C& &V&P& 4 \\
   ORL  & byte, \A         & 42 &    &      &      & 2   & & & & & 1 \\
-       & byte, \#im       & 43 &    &      &      & 3   & & & & & 2 \\
+       & byte, \#imm      & 43 &    &      &      & 3   & & & & & 2 \\
        & \A, op           & 44 & 45 & 46+i & 48+n & 1/2 & & & &P& 1 \\
        & \C, op           &    & 72 &      &      & 2   &C& & & & 2 \\
        & \C, /op          &    & A0 &      &      & 2   &C& & & & 2 \\
   ANL  & byte, \A         & 52 &    &      &      & 2   & & & & & 1 \\
-       & byte, \#im       & 53 &    &      &      & 3   & & & & & 2 \\
+       & byte, \#imm      & 53 &    &      &      & 3   & & & & & 2 \\
        & \A, op           & 54 & 55 & 56+i & 58+n & 1/2 & & & &P& 1 \\
        & \C, op           &    & 82 &      &      & 2   &C& & & & 2 \\
        & \C, /op          &    & B0 &      &      & 2   &C& & & & 2 \\
   XRL  & byte, \A         & 62 &    &      &      & 2   & & & & & 1 \\
-       & byte, \#im       & 63 &    &      &      & 3   & & & & & 2 \\
+       & byte, \#imm      & 63 &    &      &      & 3   & & & & & 2 \\
        & \A, op           & 64 & 65 & 66+i & 68+n & 1/2 & & & &P& 1 \\
-  MOV  & op, \#im     & \AO{74}&    & 76+i & 78+n & 2/3 & & & &\AO{P} & 1 \\
+  MOV  & op, \#imm    & \AO{74}&    & 76+i & 78+n & 2/3 & & & &\AO{P} & 1 \\
        & byte, op         & 75 & 85 & 86+i & 88+n & 2/3 & & & & & 2 \\
        & op, byte         &    &    & A6+i & A8+n & 2/3 & & & & & 2 \\
        & \A, op           &    & E5 & E6+i & E8+n & 1/2 & & & &P& 1 \\
@@ -107,7 +107,7 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   DA   & \A               & D4 &    &      &      & 1   &C& &V&P& 1 \\
   DJNZ & op, rel          &    & D5 &      & D8+n & 2/3 & & & & & 2 \\
   CJNE & \A, op, rel      & B4 & B5 &      &      & 3   &C& & & & 2 \\
-       & op, \#im, rel    &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
+       & op, \#imm, rel   &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
   \bottomrule
 \end{tabular}
 
@@ -160,15 +160,15 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   & \normalfont Operands & \normalfont Op & \normalfont Len &
     \normalfont Fl & \normalfont Cyc \\
   \midrule
-  MOVX & \A, @\DPTR    & E0   & 1 & P & 2 \\
-       & \A, @Ri       & E2+i & 1 & P & 2 \\
-       & @\DPTR, \A    & F0   & 1 &   & 2 \\
-       & @Ri, \A       & F2+i & 1 &   & 2 \\
-  JMP  & @\A+\DPTR     & 73   & 1 &   & 2 \\
-  MOVC & \A, @\A+\PC   & 83   & 1 & P & 2 \\
-       & \A, @\A+\DPTR & 93   & 1 & P & 2 \\
-  MOV  & \DPTR, \#im16 & 90   & 3 &   & 2 \\
-  INC  & \DPTR         & A3   & 1 &   & 2 \\
+  MOVX & \A, @\DPTR     & E0   & 1 & P & 2 \\
+       & \A, @Ri        & E2+i & 1 & P & 2 \\
+       & @\DPTR, \A     & F0   & 1 &   & 2 \\
+       & @Ri, \A        & F2+i & 1 &   & 2 \\
+  JMP  & @\A+\DPTR      & 73   & 1 &   & 2 \\
+  MOVC & \A, @\A+\PC    & 83   & 1 & P & 2 \\
+       & \A, @\A+\DPTR  & 93   & 1 & P & 2 \\
+  MOV  & \DPTR, \#imm16 & 90   & 3 &   & 2 \\
+  INC  & \DPTR          & A3   & 1 &   & 2 \\
   \bottomrule
 \end{tabular}
 

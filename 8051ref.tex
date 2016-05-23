@@ -20,6 +20,7 @@
 \newcommand\DPTR{\texttt{DPTR}}
 \newcommand\PC{\texttt{PC}}
 \newcommand\fn[1]{\rlap{\footnotemark[#1]}}
+\newcommand\vfillmin[1]{\vspace{#1}\vfill}
 
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
@@ -64,7 +65,7 @@
 \ttfamily
 \centering
 
-  \begin{tabular}[t]{l>{\normalfont}l@{ }>{\normalfont}l@{ }>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
+\begin{tabular}[t]{l>{\normalfont}l@{ }>{\normalfont}l@{ }>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
   \toprule
     \multicolumn{4}{l}{\textnormal{\textbf{Arithmetic}}} &
     \textnormal{\#} & $d$ &
@@ -109,7 +110,7 @@
   \bottomrule
 \end{tabular}
 
-\vfill
+\vfillmin{1em}
 
 \begin{tabular}[t]{ll@{}lcc>{\normalfont}c>{\normalfont}c}
   \toprule
@@ -136,7 +137,7 @@
   \bottomrule
 \end{tabular}
 
-\vfill
+\vfillmin{1em}
 
 \begin{tabular}{lccc>{\normalfont}cc>{\normalfont}c}
   \toprule
@@ -152,7 +153,7 @@
   \bottomrule
 \end{tabular}
 
-\vfill
+\vfillmin{1em}
 
 \begin{tabular}{llc>{\normalfont}cc>{\normalfont}c}
   \toprule

@@ -10,7 +10,7 @@
 \usepackage{microtype}
 \usepackage{tabularx}
 
-\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{C}{@{}>{\centering\arraybackslash}X}
 
 \newcommand\A{\texttt{A}}
 \newcommand\AB{\texttt{AB}}
@@ -42,18 +42,11 @@
 
 \noindent
 \texttt{PSW}:
-\begin{tabularx}{2in}{@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}C@{}}
-   7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
-   \texttt{C} &
-   \texttt{A} &
-   \texttt{F0} &
-   \texttt{RS1} &
-   \texttt{RS0} &
-   \texttt{V} &
-   \texttt{UD} &
-   \texttt{P}
-\end{tabularx}
-\hfill\strut\\
+\begin{tabularx}{2.2in}{CCCCCCCC}
+  7 & 6 & 5 & 4 & 3 & 2 & 1 & 0 \\
+  \texttt{C} & \texttt{A} & \texttt{F0} & \texttt{RS1} &
+   \texttt{RS0} & \texttt{V} & \texttt{UD} & \texttt{P}
+\end{tabularx}\\
 Fl: \textbf{c}arry \textbf{a}uxcarry o\textbf{v}erflow \textbf{p}arity \\
 register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 

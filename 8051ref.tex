@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage{microtype}
 \usepackage{tabularx}
+\usepackage{mathtools}
 
 \newcolumntype{C}{@{}>{\centering\arraybackslash}X}
 
@@ -48,7 +49,7 @@
   \texttt{C} & \texttt{A} & \texttt{F0} & \texttt{RS1} &
    \texttt{RS0} & \texttt{V} & \texttt{UD} & \texttt{P}
 \end{tabularx}\\
-Fl: \textbf{c}arry \textbf{a}uxcarry o\textbf{v}erflow \textbf{p}arity \\
+F: \textbf{c}arry \textbf{a}uxcarry o\textbf{v}erflow \textbf{p}arity \\
 register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 
 \end{multicols}
@@ -56,80 +57,81 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 \begin{multicols}{2}
 
 % Prepopulate footnotes
-\footnotetext[1]{Immediate, direct, and bit operands require one additional byte}
-\footnotetext[2]{Uses {\A} rather than an immediate value; only this form affects the \texttt{P} flag}
+\footnotetext[1]{Affects {\A} rather than an immediate value; only this form affects the \texttt{P} flag}
+\footnotetext[2]{Immediate, direct, and bit operands add one additional byte}
 \footnotetext[3]{{\C} variant may affect {\C} flag; {\A} variant may affect \texttt{P} flag}
 
 \ttfamily
 \centering
+
   \begin{tabular}[t]{l>{\normalfont}l@{ }>{\normalfont}l@{ }>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
-  %\multicolumn{12}{c}{\small\sffamily\bfseries Arithmetic/byte manipulation}\\
   \toprule
     \multicolumn{4}{l}{\textnormal{\textbf{Arithmetic}}} &
-    \textnormal{\#}\fn1 & $d$\fn1 & \textnormal{@R$i$} & \textnormal{R$n$} &
-    Len & \multicolumn{4}{c}{\textnormal{Fl}} & Cyc \\
+    \textnormal{\#} & $d$ &
+    \clap{\textnormal{@R$i$}} &
+    \clap{\textnormal{R$n$}} &
+    L & \multicolumn{4}{c}{\textnormal{F}} & T \\
   \midrule
-  INC  & $-$              &&&04\fn2& 05 & 06+i & 08+n & 1/2 & & & &P\fn2& 1 \\
-  DEC  & $-$              &&&14\fn2& 15 & 16+i & 18+n & 1/2 & & & &P\fn2& 1 \\
-  ADD  & \A, & $-$           && 24 & 25 & 26+i & 28+n & 1/2 &C&A&V&P& 1 \\
-  ADDC & \A, & $-$           && 34 & 35 & 36+i & 38+n & 1/2 &C&A&V&P& 1 \\
-  SUBB & \A, & $-$           && 94 & 95 & 96+i & 98+n & 1/2 &C&A&V&P& 1 \\
-  DIV  & \AB                &&& 84 &    &      &      & 1   &C& &V&P& 4 \\
-  MUL  & \AB                &&& A4 &    &      &      & 1   &C& &V&P& 4 \\
-  ORL  & $d$, & \A           && 42 &    &      &      & 2   & & & & & 1 \\
-       & $d$, & \I$k$        && 43 &    &      &      & 3   & & & & & 2 \\
-       & \A, & $-$           && 44 & 45 & 46+i & 48+n & 1/2 & & & &P& 1 \\
-       & \C, & $b$           &&    & 72 &      &      & 2   &C& & & & 2 \\
-       & \C, & \texttt{/}$b$ &&    & A0 &      &      & 2   &C& & & & 2 \\
-  ANL  & $d$, & \A           && 52 &    &      &      & 2   & & & & & 1 \\
-       & $d$, & \I$k$        && 53 &    &      &      & 3   & & & & & 2 \\
-       & \A, & $-$           && 54 & 55 & 56+i & 58+n & 1/2 & & & &P& 1 \\
-       & \C, & $b$           &&    & 82 &      &      & 2   &C& & & & 2 \\
-       & \C, & \texttt{/}$b$ &&    & B0 &      &      & 2   &C& & & & 2 \\
-  XRL  & $d$, & \A           && 62 &    &      &      & 2   & & & & & 1 \\
-       & $d$, & \I$k$        && 63 &    &      &      & 3   & & & & & 2 \\
-       & \A, & $-$           && 64 & 65 & 66+i & 68+n & 1/2 & & & &P& 1 \\
-  MOV  & $-$, & \I$k$      &&74\fn2&    & 76+i & 78+n & 2/3 & & & &P\fn2& 1 \\
-       & $d$, & $-$          && 75 & 85 & 86+i & 88+n & 2/3 & & & & & 2 \\
-       & $-$, & $d$          &&    &    & A6+i & A8+n & 2/3 & & & & & 2 \\
-       & \A, & $-$           &&    & E5 & E6+i & E8+n & 1/2 & & & &P& 1 \\
-       & $-$, & \A           &&    & F5 & F6+i & F8+n & 1/2 & & & & & 1 \\
-       & $b$, & \C           &&    & 92 &      &      & 2   & & & & & 2 \\
-       & \C, & $b$           &&    & A2 &      &      & 2   &C& & & & 2 \\
-  SWAP & \A                 &&& C4 &    &      &      & 1   & & & & & 1 \\
-  XCH  & \A, & $-$           &&    & C5 & C6+i & C8+n & 1/2 & & & &P& 1 \\
-  XCHD & \A, & $-$           &&    &    & D6+i &      & 1   & & & &P& 1 \\
-  DA   & \A                 &&& D4 &    &      &      & 1   &C& &V&P& 1 \\
-  DJNZ & $-$, & $ra$         &&    & D5 &      & D8+n & 2/3 & & & & & 2 \\
-  CJNE & \A, & $-$, & $ra$    & B4 & B5 &      &      & 3   &C& & & & 2 \\
-       & $-$, & \I$k$, & $ra$ &    &    & B6+i & B8+n & 3   &C& & & & 2 \\
+  INC  & $-$              &&&04\fn1& 05 & 06 & 08 & 1\fn2 & & & &P\fn1& 1 \\
+  DEC  & $-$              &&&14\fn1& 15 & 16 & 18 & 1\fn2 & & & &P\fn1& 1 \\
+  ADD  & \A, & $-$           && 24 & 25 & 26 & 28 & 1\fn2 &C&A&V&P& 1 \\
+  ADDC & \A, & $-$           && 34 & 35 & 36 & 38 & 1\fn2 &C&A&V&P& 1 \\
+  SUBB & \A, & $-$           && 94 & 95 & 96 & 98 & 1\fn2 &C&A&V&P& 1 \\
+  DIV  & \AB                &&& 84 &    &    &    & 1   &C& &V&P& 4 \\
+  MUL  & \AB                &&& A4 &    &    &    & 1   &C& &V&P& 4 \\
+  ORL  & $d$, & \A           && 42 &    &    &    & 2   & & & & & 1 \\
+       & $d$, & \I$k$        && 43 &    &    &    & 3   & & & & & 2 \\
+       & \A, & $-$           && 44 & 45 & 46 & 48 & 1\fn2 & & & &P& 1 \\
+       & \C, & $b$           &&    & 72 &    &    & 2   &C& & & & 2 \\
+       & \C, & \texttt{/}$b$ &&    & A0 &    &    & 2   &C& & & & 2 \\
+  ANL  & $d$, & \A           && 52 &    &    &    & 2   & & & & & 1 \\
+       & $d$, & \I$k$        && 53 &    &    &    & 3   & & & & & 2 \\
+       & \A, & $-$           && 54 & 55 & 56 & 58 & 1\fn2 & & & &P& 1 \\
+       & \C, & $b$           &&    & 82 &    &    & 2   &C& & & & 2 \\
+       & \C, & \texttt{/}$b$ &&    & B0 &    &    & 2   &C& & & & 2 \\
+  XRL  & $d$, & \A           && 62 &    &    &    & 2   & & & & & 1 \\
+       & $d$, & \I$k$        && 63 &    &    &    & 3   & & & & & 2 \\
+       & \A, & $-$           && 64 & 65 & 66 & 68 & 1\fn2 & & & &P& 1 \\
+  MOV  & $-$, & \I$k$      &&74\fn1&    & 76 & 78 & 2\fn2 & & & &P\fn1& 1 \\
+       & $d$, & $-$          && 75 & 85 & 86 & 88 & 2\fn2 & & & & & 2 \\
+       & $-$, & $d$          &&    &    & A6 & A8 & 2\fn2 & & & & & 2 \\
+       & \A, & $-$           &&    & E5 & E6 & E8 & 1\fn2 & & & &P& 1 \\
+       & $-$, & \A           &&    & F5 & F6 & F8 & 1\fn2 & & & & & 1 \\
+       & $b$, & \C           &&    & 92 &    &    & 2   & & & & & 2 \\
+       & \C, & $b$           &&    & A2 &    &    & 2   &C& & & & 2 \\
+  SWAP & \A                 &&& C4 &    &    &    & 1   & & & & & 1 \\
+  XCH  & \A, & $-$           &&    & C5 & C6 & C8 & 1\fn2 & & & &P& 1 \\
+  XCHD & \A, & $-$           &&    &    & D6 &    & 1   & & & &P& 1 \\
+  DA   & \A                 &&& D4 &    &    &    & 1   &C& &V&P& 1 \\
+  DJNZ & $-$, & $ra$         &&    & D5 &    & D8 & 2\fn2 & & & & & 2 \\
+  CJNE & \A, & $-$, & $ra$    & B4 & B5 &    &    & 3   &C& & & & 2 \\
+       & $-$, & \I$k$, & $ra$ &    &    & B6 & B8 & 3   &C& & & & 2 \\
   \bottomrule
 \end{tabular}
 
 \vfill
 
 \begin{tabular}[t]{ll@{}lcc>{\normalfont}c>{\normalfont}c}
-  %\multicolumn{6}{c}{\small\sffamily\bfseries Control} \\
   \toprule
   \multicolumn{3}{l}{\textnormal{\textbf{Control}}} & \multicolumn{2}{c}{\normalfont Opcodes} &
-    \normalfont Len & \normalfont Cyc \\
+    \normalfont L & \normalfont T \\
   \midrule
   NOP  &            && 00 &    & 1 & 1 \\
   JBC  & $b$, & $ra$ & 10 &    & 3 & 2 \\
-  \normalfont \texttt{JB}/\texttt{JNB}
+  \normalfont \texttt{JB}/\texttt{NB}
        & $b$, & $ra$ & 20 & 30 & 3 & 2 \\
-  \normalfont \texttt{JC}/\texttt{JNC}
+  \normalfont \texttt{JC}/\texttt{NC}
        & $ra$       && 40 & 50 & 2 & 2 \\
-  \normalfont \texttt{JZ}/\texttt{JNZ}
+  \normalfont \texttt{JZ}/\texttt{NZ}
        & $ra$       && 60 & 70 & 2 & 2 \\
   SJMP & $ra$       && 80 &    & 2 & 2 \\
   \normalfont \texttt{PUSH}/\texttt{POP}
        & $d$        && C0 & D0 & 2 & 2 \\
-  \normalfont \texttt{AJMP}/\texttt{ACALL}
+  \normalfont \texttt{AJMP}/\texttt{CALL}
        & $aa$       &&01+a&11+a& 2 & 2 \\
-  \normalfont \texttt{LJMP}/\texttt{LCALL}
+  \normalfont \texttt{LJMP}/\texttt{CALL}
        & $la$       && 02 & 12 & 3 & 2 \\
-  \normalfont \texttt{RET}/\texttt{RETI}
+  \normalfont \texttt{RET}/\texttt{I}
        &            && 22 & 32 & 1 & 2 \\
   \bottomrule
 \end{tabular}
@@ -137,28 +139,28 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 \vfill
 
 \begin{tabular}{lccc>{\normalfont}cc>{\normalfont}c}
-  \multicolumn{7}{c}{\small\sffamily\bfseries Bit manipulation} \\
   \toprule
-  & \normalfont $b$\fn1 & \C & \A & Len & \normalfont Fl & Cyc \\
+  \normalfont{\textbf{Bits}} & $b$ & \C & \A & L & \normalfont F & T \\
   \midrule
   RR   &    &    & 03 & 1   &       & 1 \\
   RRC  &    &    & 13 & 1   &C\,\,P & 1 \\
   RL   &    &    & 23 & 1   &       & 1 \\
   RLC  &    &    & 33 & 1   &C\,\,P & 1 \\
-  CPL  & B2 & B3 & F4 & 1/2 & (C\,\,P)\fn3 & 1 \\
-  CLR  & C2 & C3 & E4 & 1/2 & (C\,\,P)\fn3 & 1 \\
-  SETB & D2 & D3 &    & 1/2 & (C\,\,P)\fn3 & 1 \\
+  CPL  & B2 & B3 & F4 & 1\fn2 & (C\,\,P)\fn3 & 1 \\
+  CLR  & C2 & C3 & E4 & 1\fn2 & (C\,\,P)\fn3 & 1 \\
+  SETB & D2 & D3 &    & 1\fn2 & (C\,\,P)\fn3 & 1 \\
   \bottomrule
 \end{tabular}
 
 \vfill
 
 \begin{tabular}{llc>{\normalfont}cc>{\normalfont}c}
-  \multicolumn{6}{c}{\small\sffamily\bfseries Code/XData segments} \\
   \toprule
-  & \normalfont Operands & \normalfont Op & \normalfont Len &
-    \normalfont Fl & \normalfont Cyc \\
+  \multicolumn{2}{l}{\textnormal{\textbf{XRAM/PMEM}}} & \normalfont Op & \normalfont L &
+    \normalfont F & \normalfont T \\
   \midrule
+  MOV  & \DPTR, \#$K$   & 90   & 3 &   & 2 \\
+  INC  & \DPTR          & A3   & 1 &   & 2 \\
   MOVX & \A, @\DPTR     & E0   & 1 & P & 2 \\
        & \A, @R$i$      & E2+i & 1 & P & 2 \\
        & @\DPTR, \A     & F0   & 1 &   & 2 \\
@@ -166,8 +168,6 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   JMP  & @\A+\DPTR      & 73   & 1 &   & 2 \\
   MOVC & \A, @\A+\PC    & 83   & 1 & P & 2 \\
        & \A, @\A+\DPTR  & 93   & 1 & P & 2 \\
-  MOV  & \DPTR, \#$K$   & 90   & 3 &   & 2 \\
-  INC  & \DPTR          & A3   & 1 &   & 2 \\
   \bottomrule
 \end{tabular}
 \end{multicols}

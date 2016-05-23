@@ -17,7 +17,7 @@
 \newcommand\C{\texttt{C}}
 \newcommand\DPTR{\texttt{DPTR}}
 \newcommand\PC{\texttt{PC}}
-\newcommand\AO[1]{#1\rlap{\normalfont\footnotemark[2]}}
+\newcommand\fn[1]{\rlap{\footnotemark[#1]}}
 
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
 
@@ -71,11 +71,11 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 \begin{tabular}[t]{l>{\normalfont}lcccc>{\normalfont}cc@{\,\,}c@{\,\,}c@{\,\,}c>{\normalfont}c}
   \multicolumn{12}{c}{\small\sffamily\bfseries Arithmetic/byte manipulation}\\
   \toprule
-  & Operands & \normalfont \#\rlap{\footnotemark[1]} & \normalfont M\rlap{\footnotemark[1]} & \normalfont @Ri & \normalfont Rn &
+  & Operands & \normalfont \#\fn1 & \normalfont M\fn1 & \normalfont @Ri & \normalfont Rn &
     Len & \multicolumn{4}{c}{\normalfont Fl} & Cyc \\
   \midrule
-  INC  & op           & \AO{04}& 05 & 06+i & 08+n & 1/2 & & & &\AO{P}& 1 \\
-  DEC  & op           & \AO{14}& 15 & 16+i & 18+n & 1/2 & & & &\AO{P}& 1 \\
+  INC  & op             &04\fn2& 05 & 06+i & 08+n & 1/2 & & & &P\fn2& 1 \\
+  DEC  & op             &14\fn2& 15 & 16+i & 18+n & 1/2 & & & &P\fn2& 1 \\
   ADD  & \A, op           & 24 & 25 & 26+i & 28+n & 1/2 &C&A&V&P& 1 \\
   ADDC & \A, op           & 34 & 35 & 36+i & 38+n & 1/2 &C&A&V&P& 1 \\
   SUBB & \A, op           & 94 & 95 & 96+i & 98+n & 1/2 &C&A&V&P& 1 \\
@@ -94,7 +94,7 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
   XRL  & byte, \A         & 62 &    &      &      & 2   & & & & & 1 \\
        & byte, \#imm      & 63 &    &      &      & 3   & & & & & 2 \\
        & \A, op           & 64 & 65 & 66+i & 68+n & 1/2 & & & &P& 1 \\
-  MOV  & op, \#imm    & \AO{74}&    & 76+i & 78+n & 2/3 & & & &\AO{P} & 1 \\
+  MOV  & op, \#imm      &74\fn2&    & 76+i & 78+n & 2/3 & & & &P\fn2& 1 \\
        & byte, op         & 75 & 85 & 86+i & 88+n & 2/3 & & & & & 2 \\
        & op, byte         &    &    & A6+i & A8+n & 2/3 & & & & & 2 \\
        & \A, op           &    & E5 & E6+i & E8+n & 1/2 & & & &P& 1 \\
@@ -141,15 +141,15 @@ register bank starts at byte (\texttt{RS1} \texttt{RS0})*8
 \begin{tabular}{lccc>{\normalfont}cc>{\normalfont}c}
   \multicolumn{7}{c}{\small\sffamily\bfseries Bit manipulation} \\
   \toprule
-  & \normalfont bit\rlap{\footnotemark[1]} & \C & \A & Len & \normalfont Fl & Cyc \\
+  & \normalfont bit\fn1 & \C & \A & Len & \normalfont Fl & Cyc \\
   \midrule
   RR   &    &    & 03 & 1   &       & 1 \\
   RRC  &    &    & 13 & 1   &C\,\,P & 1 \\
   RL   &    &    & 23 & 1   &       & 1 \\
   RLC  &    &    & 33 & 1   &C\,\,P & 1 \\
-  CPL  & B2 & B3 & F4 & 1/2 & (C\,\,P)\rlap{\footnotemark[3]} & 1 \\
-  CLR  & C2 & C3 & E4 & 1/2 & (C\,\,P)\rlap{\footnotemark[3]} & 1 \\
-  SETB & D2 & D3 &    & 1/2 & (C\,\,P)\rlap{\footnotemark[3]} & 1 \\
+  CPL  & B2 & B3 & F4 & 1/2 & (C\,\,P)\fn3 & 1 \\
+  CLR  & C2 & C3 & E4 & 1/2 & (C\,\,P)\fn3 & 1 \\
+  SETB & D2 & D3 &    & 1/2 & (C\,\,P)\fn3 & 1 \\
   \bottomrule
 \end{tabular}
 
